@@ -7,7 +7,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vimwiki/vimwiki'
 Plug 'vifm/vifm'
 " Plug 'jremmen/vim-ripgrep'
-" Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 " Plug 'vim-utils/vim-man'
 Plug 'mbbill/undotree'
 Plug 'sheerun/vim-polyglot'
@@ -116,7 +116,16 @@ let g:neomake_warning_sign = {'text': '?'}
 "----- Lightline
 let g:lightline = {}
 let g:lightline.colorscheme = 'sonokai'
-let g:lightline = {'colorscheme' : 'sonokai' }
+let g:lightline = {
+      \ 'colorscheme': 'sonokai',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
+      \ },
+      \ }
 
 
 "----- General Settings
