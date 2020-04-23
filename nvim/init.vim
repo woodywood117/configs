@@ -31,6 +31,7 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'junegunn/fzf', {'dir': '~/.local/src/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'cohama/lexima.vim'
+Plug 'frazrepo/vim-rainbow'
 call plug#end()
 
 
@@ -133,6 +134,7 @@ filetype plugin on
 syntax on
 set colorcolumn=80
 set cursorline
+set cursorcolumn
 autocmd BufRead *.rs set filetype=rust
 autocmd BufRead *.go set filetype=go
 set number
@@ -169,6 +171,11 @@ set noexpandtab
 set listchars=tab:│\ 
 set list
 let g:vimwiki_list = [{'path': '~/.config/nvim/vimwiki'}]
+let g:rainbow_active=1
+set foldmethod=syntax
+set foldlevel=99
+set foldnestmax=1
+set wildmode=longest,list,full
 
 autocmd VimLeave * call system("xsel -ib", getreg('+')) " prevent vim from clearing clipboard on close
 
@@ -180,11 +187,12 @@ endif
 
 
 "----- Key Remaps
-nmap <leader>w :w<CR> " Quicksave
-nnoremap <silent> <leader>h :wincmd h<CR>
-nnoremap <silent> <leader>j :wincmd j<CR>
-nnoremap <silent> <leader>k :wincmd k<CR>
-nnoremap <silent> <leader>l :wincmd l<CR>
+nmap <leader>w :wa<CR> " Quicksave
+nmap <C-x> :xa<CR> " Quicksave and quit
+nnoremap <silent> <C-h> <C-w>h
+nnoremap <silent> <C-j> <C-w>j
+nnoremap <silent> <C-k> <C-w>k
+nnoremap <silent> <C-l> <C-w>l
 
 " Use <c-.> to trigger completion.
 inoremap <silent><expr> <C-.> coc#refresh()
@@ -223,3 +231,6 @@ noremap <leader>h- :vertical resize -5<CR>
 noremap <Leader>y "+y
 noremap <Leader>p "+p
 autocmd FileType go nmap <leader>d :GoDecls<CR>
+
+nnoremap <leader>f za
+nnoremap <expr> <leader>F &foldlevel ? 'zM' :'zR'
