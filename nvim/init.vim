@@ -224,7 +224,7 @@ nmap <leader>rn <Plug>(coc-rename) " Symbol renaming.
 
 nnoremap <leader>c :call NERDTreeToggleFind()<cr> " toggle nerdtree
 
-nnoremap <leader>v :FzfFiles<cr>
+nnoremap <leader>v :FzfGFiles<cr>
 " nnoremap <leader>u :FzfTags<cr>
 " nnoremap <leader>j :call fzf#vim#tags("'".expand('<cword>'))<cr>
 nnoremap <leader>/ :Find 
