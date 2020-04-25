@@ -5,20 +5,20 @@ function! DoRemote(arg)
 endfunction
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vimwiki/vimwiki'
-Plug 'vifm/vifm'
+" Plug 'vifm/vifm'
 " Plug 'jremmen/vim-ripgrep'
 Plug 'tpope/vim-fugitive'
 " Plug 'vim-utils/vim-man'
-Plug 'mbbill/undotree'
-Plug 'sheerun/vim-polyglot'
+" Plug 'mbbill/undotree'
+" Plug 'sheerun/vim-polyglot'
 Plug 'itchyny/lightline.vim'
 Plug 'machakann/vim-highlightedyank'
-Plug 'andymass/vim-matchup'
+" Plug 'andymass/vim-matchup'
 Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tcomment_vim' " gc comments
-Plug 'tpope/vim-surround'
-Plug 'neomake/neomake', { 'for': ['rust', 'go'] }
-Plug 'sainnhe/sonokai'
+" Plug 'tpope/vim-surround'
+" Plug 'neomake/neomake', { 'for': ['rust', 'go'] }
+Plug 'woodywood117/sonokai'
 " Plug 'cespare/vim-toml'
 Plug 'stephpy/vim-yaml'
 " Plug 'rhysd/vim-clang-format'
@@ -32,6 +32,9 @@ Plug 'junegunn/fzf', {'dir': '~/.local/src/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'cohama/lexima.vim'
 Plug 'frazrepo/vim-rainbow'
+Plug 'unblevable/quick-scope'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'posva/vim-vue'
 call plug#end()
 
 
@@ -103,14 +106,14 @@ au FileType rust nmap <leader>rs <Plug>(rust-def-split)
 " Gross hack to stop Neomake running when exitting because it creates a zombie cargo check process
 " which holds the lock and never exits. But then, if you only have QuitPre, closing one pane will
 " disable neomake, so BufEnter reenables when you enter another buffer.
-let s:quitting = 0
-au QuitPre *.rs let s:quitting = 1
-au BufEnter *.rs let s:quitting = 0
-au BufWritePost *.rs if ! s:quitting | Neomake | else | echom "Neomake disabled"| endif
-au QuitPre *.ts let s:quitting = 1
-au BufEnter *.ts let s:quitting = 0
-au BufWritePost *.ts if ! s:quitting | Neomake | else | echom "Neomake disabled"| endif
-let g:neomake_warning_sign = {'text': '?'}
+" let s:quitting = 0
+" au QuitPre *.rs let s:quitting = 1
+" au BufEnter *.rs let s:quitting = 0
+" au BufWritePost *.rs if ! s:quitting | Neomake | else | echom "Neomake disabled"| endif
+" au QuitPre *.ts let s:quitting = 1
+" au BufEnter *.ts let s:quitting = 0
+" au BufWritePost *.ts if ! s:quitting | Neomake | else | echom "Neomake disabled"| endif
+" let g:neomake_warning_sign = {'text': '?'}
 
 
 "----- Lightline
@@ -134,8 +137,6 @@ colorscheme sonokai
 let g:sonokai_style = 'atlantis'
 let g:sonokai_enable_italic = 1
 let g:sonokai_disable_italic_comment = 1
-hi NonText ctermbg=NONE 
-hi Normal guibg=NONE ctermbg=NONE
 let transparency=10
 let mapleader=" "
 set nocompatible
@@ -144,8 +145,11 @@ syntax on
 set colorcolumn=80
 set cursorline
 set cursorcolumn
-autocmd BufRead *.rs set filetype=rust
-autocmd BufRead *.go set filetype=go
+" autocmd BufRead *.rs set filetype=rust
+" autocmd BufRead *.go set filetype=go
+autocmd BufRead,BufNewFile *.rs setfiletype rust
+autocmd BufRead,BufNewFile *.go setfiletype go
+autocmd BufRead,BufNewFile *.vue setfiletype vue
 set number
 " set relativenumber
 set title
@@ -180,11 +184,20 @@ set noexpandtab
 set listchars=tab:│\ 
 set list
 let g:vimwiki_list = [{'path': '~/.config/nvim/vimwiki'}]
-let g:rainbow_active=1
+au FileType c,cpp,go,rust call rainbow#load()
 set foldmethod=syntax
 set foldlevel=99
 set foldnestmax=1
 set wildmode=longest,list,full
+" Trigger a highlight in the appropriate direction when pressing these keys:
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+" Set tab for vue files
+autocmd BufRead,BufNewFile *.vue set expandtab
+autocmd BufRead,BufNewFile *.vue set shiftwidth=2
+autocmd BufRead,BufNewFile *.vue set softtabstop=2
+autocmd BufRead,BufNewFile *.vue set tabstop=2
+let g:vue_pre_processors = 'detect_on_enter'
 
 autocmd VimLeave * call system("xsel -ib", getreg('+')) " prevent vim from clearing clipboard on close
 
@@ -196,7 +209,8 @@ endif
 
 
 "----- Key Remaps
-nmap <leader>w :wa<CR> " Quicksave
+nmap <C-w> :wa<CR> " Quicksave
+nmap <C-q> :qa!<CR> " Quick quit, no save
 nmap <C-x> :xa<CR> " Quicksave and quit
 nnoremap <silent> <C-h> <C-w>h
 nnoremap <silent> <C-j> <C-w>j
@@ -218,13 +232,14 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <silent> gi <Plug>(coc-diagnostic-info)
+" nmap <silent> gi <Plug>(coc-diagnostic-info)
 nnoremap <silent> K :call CocAction('doHover')<CR>
 nmap <leader>rn <Plug>(coc-rename) " Symbol renaming.
 
 nnoremap <leader>c :call NERDTreeToggleFind()<cr> " toggle nerdtree
 
 nnoremap <leader>v :FzfGFiles<cr>
+nnoremap <leader>b :FzfFiles<cr>
 " nnoremap <leader>u :FzfTags<cr>
 " nnoremap <leader>j :call fzf#vim#tags("'".expand('<cword>'))<cr>
 nnoremap <leader>/ :Find 
@@ -243,3 +258,10 @@ autocmd FileType go nmap <leader>d :GoDecls<CR>
 
 nnoremap <leader>f za
 nnoremap <expr> <leader>F &foldlevel ? 'zM' :'zR'
+
+nmap <silent> sv :vs<CR>
+nmap <silent> ss :sp<CR>
+
+map <C-t> :tabnew<cr>
+nmap <C-Left> :tabprev<Return>
+nmap <C-Right> :tabnext<Return>
