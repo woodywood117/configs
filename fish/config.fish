@@ -9,7 +9,6 @@ funcsave vim
 
 function ide
 	tmux split-window -v -p 20
-	tmux split-window -h -p 66
 	tmux split-window -h -p 50
 end
 funcsave ide
@@ -27,4 +26,8 @@ abbr -a -g gc git commit
 abbr -a -g gp git push
 abbr -a -g gs git status
 abbr -a -g tm tmux
+abbr -a -g nserve npm run serve
+abbr -a -g nserveo npm run serve --open
+abbr -a -g nbuild npm run build
+abbr -a -g . source ~/.config/fish/config.fish
 alias gateway='ip route'

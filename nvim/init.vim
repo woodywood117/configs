@@ -149,7 +149,7 @@ set cursorcolumn
 " autocmd BufRead *.go set filetype=go
 autocmd BufRead,BufNewFile *.rs setfiletype rust
 autocmd BufRead,BufNewFile *.go setfiletype go
-autocmd BufRead,BufNewFile *.vue setfiletype vue
+autocmd BufRead,BufNewFile *.vue setfiletype vue,html,css
 set number
 " set relativenumber
 set title
@@ -250,6 +250,10 @@ noremap <leader>v+ :resize +5<CR>
 noremap <leader>v- :resize -5<CR>
 noremap <leader>h+ :vertical resize +5<CR>
 noremap <leader>h- :vertical resize -5<CR>
+noremap <C-S-Up> :resize -5<CR>
+noremap <C-S-Down> :resize +5<CR>
+noremap <C-S-Right> :vertical resize -5<CR>
+noremap <C-S-Left> :vertical resize +5<CR>
 
 " Copy
 noremap <Leader>y "+y
