@@ -14,11 +14,12 @@ Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
 Plug 'machakann/vim-highlightedyank'
 " Plug 'andymass/vim-matchup'
-Plug 'scrooloose/nerdtree'
+" Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tcomment_vim' " gc comments
-" Plug 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 " Plug 'neomake/neomake', { 'for': ['rust', 'go'] }
 Plug 'woodywood117/sonokai'
+Plug 'wadackel/vim-dogrun'
 " Plug 'cespare/vim-toml'
 Plug 'stephpy/vim-yaml'
 " Plug 'rhysd/vim-clang-format'
@@ -35,6 +36,8 @@ Plug 'frazrepo/vim-rainbow'
 Plug 'unblevable/quick-scope'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'posva/vim-vue'
+Plug 'alvan/vim-closetag'
+Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
 
@@ -67,14 +70,14 @@ autocmd Syntax * syn match UndefinedMarks /???/ containedin=ALL
 
 "----- NERDTree
 " Open NERDTree in the directory of the current file (or /home if no file is open)
-function! NERDTreeToggleFind()
-  if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
-    execute ":NERDTreeClose"
-  else
-    execute ":NERDTreeFind"
-  endif
-endfunction
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" function! NERDTreeToggleFind()
+"   if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
+"     execute ":NERDTreeClose"
+"   else
+"     execute ":NERDTreeFind"
+"   endif
+" endfunction
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 
 "----- FZF
@@ -133,10 +136,10 @@ let g:lightline = {
 
 "----- General Settings
 set termguicolors
-colorscheme sonokai
-let g:sonokai_style = 'atlantis'
-let g:sonokai_enable_italic = 1
-let g:sonokai_disable_italic_comment = 1
+colorscheme dogrun
+" let g:sonokai_style = 'atlantis'
+" let g:sonokai_enable_italic = 1
+" let g:sonokai_disable_italic_comment = 1
 let transparency=10
 let mapleader=" "
 set nocompatible
@@ -197,6 +200,10 @@ autocmd BufRead,BufNewFile *.vue set expandtab
 autocmd BufRead,BufNewFile *.vue set shiftwidth=2
 autocmd BufRead,BufNewFile *.vue set softtabstop=2
 autocmd BufRead,BufNewFile *.vue set tabstop=2
+autocmd BufRead,BufNewFile *.js set expandtab
+autocmd BufRead,BufNewFile *.js set shiftwidth=2
+autocmd BufRead,BufNewFile *.js set softtabstop=2
+autocmd BufRead,BufNewFile *.js set tabstop=2
 let g:vue_pre_processors = 'detect_on_enter'
 
 autocmd VimLeave * call system("xsel -ib", getreg('+')) " prevent vim from clearing clipboard on close
@@ -216,6 +223,10 @@ nnoremap <silent> <C-h> <C-w>h
 nnoremap <silent> <C-j> <C-w>j
 nnoremap <silent> <C-k> <C-w>k
 nnoremap <silent> <C-l> <C-w>l
+nnoremap <silent> <leader>h <C-w>h
+nnoremap <silent> <leader>j <C-w>j
+nnoremap <silent> <leader>k <C-w>k
+nnoremap <silent> <leader>l <C-w>l
 
 " Use <c-.> to trigger completion.
 inoremap <silent><expr> <C-.> coc#refresh()
@@ -236,7 +247,7 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call CocAction('doHover')<CR>
 nmap <leader>rn <Plug>(coc-rename) " Symbol renaming.
 
-nnoremap <leader>c :call NERDTreeToggleFind()<cr> " toggle nerdtree
+" nnoremap <leader>c :call NERDTreeToggleFind()<cr> " toggle nerdtree
 
 nnoremap <leader>v :FzfGFiles<cr>
 nnoremap <leader>b :FzfFiles<cr>
@@ -269,3 +280,10 @@ nmap <silent> ss :sp<CR>
 map <C-t> :tabnew<cr>
 nmap <C-Left> :tabprev<Return>
 nmap <C-Right> :tabnext<Return>
+
+ " Explorer
+nmap <space>c :CocCommand explorer<CR>
+" nmap <space>f :CocCommand explorer --preset floating<CR>
+autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+
+nmap <leader>fj :%!python -m json.tool<cr>
