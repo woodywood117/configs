@@ -8,17 +8,16 @@ Plug 'vimwiki/vimwiki'
 " Plug 'vifm/vifm'
 " Plug 'jremmen/vim-ripgrep'
 Plug 'tpope/vim-fugitive'
-" Plug 'vim-utils/vim-man'
+Plug 'vim-utils/vim-man'
 " Plug 'mbbill/undotree'
 " Plug 'sheerun/vim-polyglot'
 Plug 'itchyny/lightline.vim'
 Plug 'machakann/vim-highlightedyank'
 " Plug 'andymass/vim-matchup'
-" Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tcomment_vim' " gc comments
 Plug 'tpope/vim-surround'
-" Plug 'neomake/neomake', { 'for': ['rust', 'go'] }
 Plug 'woodywood117/sonokai'
+Plug 'morhetz/gruvbox'
 Plug 'wadackel/vim-dogrun'
 " Plug 'cespare/vim-toml'
 Plug 'stephpy/vim-yaml'
@@ -33,7 +32,8 @@ Plug 'junegunn/fzf', {'dir': '~/.local/src/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'cohama/lexima.vim'
 Plug 'frazrepo/vim-rainbow'
-Plug 'unblevable/quick-scope'
+" Plug 'unblevable/quick-scope'
+Plug 'justinmk/vim-sneak'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'posva/vim-vue'
 Plug 'alvan/vim-closetag'
@@ -68,16 +68,15 @@ highlight UndefinedMarks ctermfg=yellow
 autocmd Syntax * syn match UndefinedMarks /???/ containedin=ALL
 
 
-"----- NERDTree
-" Open NERDTree in the directory of the current file (or /home if no file is open)
-" function! NERDTreeToggleFind()
-"   if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
-"     execute ":NERDTreeClose"
-"   else
-"     execute ":NERDTreeFind"
-"   endif
-" endfunction
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"----- Sneak
+let g:sneak#label = 1
+" case insensitive sneak
+let g:sneak#use_ic_scs = 1
+" imediately move tot the next instance of search, if you move the cursor sneak is back to default behavior
+let g:sneak#s_next = 1
+map s <Plug>Sneak_s
+map S <Plug>Sneak_S
+let g:sneak#prompt = '🕵'
 
 
 "----- FZF
@@ -136,7 +135,7 @@ let g:lightline = {
 
 "----- General Settings
 set termguicolors
-colorscheme dogrun
+colorscheme gruvbox
 " let g:sonokai_style = 'atlantis'
 " let g:sonokai_enable_italic = 1
 " let g:sonokai_disable_italic_comment = 1
@@ -274,8 +273,8 @@ autocmd FileType go nmap <leader>d :GoDecls<CR>
 nnoremap <leader>f za
 nnoremap <expr> <leader>F &foldlevel ? 'zM' :'zR'
 
-nmap <silent> sv :vs<CR>
-nmap <silent> ss :sp<CR>
+nmap <silent> gsv :vs<CR>
+nmap <silent> gss :sp<CR>
 
 map <C-t> :tabnew<cr>
 nmap <C-Left> :tabprev<Return>
