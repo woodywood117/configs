@@ -31,8 +31,8 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'junegunn/fzf', {'dir': '~/.local/src/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'cohama/lexima.vim'
-Plug 'frazrepo/vim-rainbow'
-" Plug 'unblevable/quick-scope'
+" Plug 'frazrepo/vim-rainbow'
+Plug 'unblevable/quick-scope'
 Plug 'justinmk/vim-sneak'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'posva/vim-vue'
@@ -135,7 +135,6 @@ let g:lightline = {
 
 "----- General Settings
 set termguicolors
-colorscheme gruvbox
 " let g:sonokai_style = 'atlantis'
 " let g:sonokai_enable_italic = 1
 " let g:sonokai_disable_italic_comment = 1
@@ -144,6 +143,7 @@ let mapleader=" "
 set nocompatible
 filetype plugin on
 syntax on
+colorscheme gruvbox
 set colorcolumn=80
 set cursorline
 set cursorcolumn
@@ -152,6 +152,7 @@ set cursorcolumn
 autocmd BufRead,BufNewFile *.rs setfiletype rust
 autocmd BufRead,BufNewFile *.go setfiletype go
 autocmd BufRead,BufNewFile *.vue setfiletype vue,html,css
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.vue'
 set number
 " set relativenumber
 set title
@@ -186,7 +187,7 @@ set noexpandtab
 set listchars=tab:│\ 
 set list
 let g:vimwiki_list = [{'path': '~/.config/nvim/vimwiki'}]
-au FileType c,cpp,go,rust call rainbow#load()
+" au FileType c,cpp,go,rust call rainbow#load()
 set foldmethod=syntax
 set foldlevel=99
 set foldnestmax=1

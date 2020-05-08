@@ -19,8 +19,11 @@ if not functions -q fisher
     fish -c fisher
 end
 
+set -U FZF_TMUX 1
+
 set -x EDITOR nvim
 abbr -a -g v nvim
+abbr -a -g c clear
 abbr -a -g ga git add -A
 abbr -a -g gc git commit
 abbr -a -g gp git push
