@@ -3,7 +3,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-highlight coc-explorer coc-yaml coc-vetur coc-tsserver coc-rls coc-json coc-html coc-go coc-css cpc-angular'}
 Plug 'vimwiki/vimwiki'
 " Plug 'vifm/vifm'
 " Plug 'jremmen/vim-ripgrep'
@@ -158,6 +158,8 @@ set number
 set title
 set mouse=a
 set noerrorbells
+set ttyfast
+set lazyredraw
 set smartindent
 set autoindent
 set noswapfile
@@ -243,6 +245,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> ga :CocList commands<CR>
 " nmap <silent> gi <Plug>(coc-diagnostic-info)
 nnoremap <silent> K :call CocAction('doHover')<CR>
 nmap <leader>rn <Plug>(coc-rename) " Symbol renaming.
