@@ -27,7 +27,9 @@ abbr -a -g c clear
 abbr -a -g ga git add -A
 abbr -a -g gc git commit
 abbr -a -g gp git push
+abbr -a -g gpl git pull
 abbr -a -g gs git status
+abbr -a -g gd git diff
 abbr -a -g tm tmux
 abbr -a -g nserve npm run serve
 abbr -a -g nserveo npm run serve --open
