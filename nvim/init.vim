@@ -182,8 +182,8 @@ let g:go_highlight_operators = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_build_constraints = 1
 let g:go_metalinter_autosave = 0
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set softtabstop=0
 set noexpandtab
 set listchars=tab:│\ 
