@@ -246,11 +246,9 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <silent> ga :CocList commands<CR>
-" nmap <silent> gi <Plug>(coc-diagnostic-info)
 nnoremap <silent> K :call CocAction('doHover')<CR>
 nmap <leader>rn <Plug>(coc-rename) " Symbol renaming.
 
-" nnoremap <leader>c :call NERDTreeToggleFind()<cr> " toggle nerdtree
 
 nnoremap <leader>v :FzfGFiles<cr>
 nnoremap <leader>b :FzfFiles<cr>
@@ -268,6 +266,11 @@ noremap <C-S-Up> :resize -5<CR>
 noremap <C-S-Down> :resize +5<CR>
 noremap <C-S-Right> :vertical resize -5<CR>
 noremap <C-S-Left> :vertical resize +5<CR>
+
+nmap <leader>gh :diffget //3<CR>
+nmap <leader>gu :diffget //2<CR>
+nmap <leader>gs :G<CR>
+nmap <leader>gc :Gcommit<CR>
 
 " Copy
 noremap <Leader>y "+y
