@@ -267,8 +267,8 @@ noremap <C-S-Down> :resize +5<CR>
 noremap <C-S-Right> :vertical resize -5<CR>
 noremap <C-S-Left> :vertical resize +5<CR>
 
-nmap <leader>gh :diffget //3<CR>
-nmap <leader>gu :diffget //2<CR>
+nmap <leader>gj :diffget //3<CR>
+nmap <leader>gf :diffget //2<CR>
 nmap <leader>gs :G<CR>
 nmap <leader>gc :Gcommit<CR>
 nmap <leader>gp :Gpush<CR>
