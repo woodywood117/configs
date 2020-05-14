@@ -218,7 +218,8 @@ endif
 
 
 "----- Key Remaps
-nmap <C-w> :wa<CR> " Quicksave
+nmap <C-w> :w<CR> " Quicksave
+nmap <C-s> :wa<CR> " Quicksave all
 nmap <C-q> :qa!<CR> " Quick quit, no save
 nmap <C-x> :xa<CR> " Quicksave and quit
 nnoremap <silent> <C-h> <C-w>h
