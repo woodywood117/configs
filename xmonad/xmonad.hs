@@ -5,6 +5,7 @@ import XMonad.Util.SpawnOnce
 import XMonad.Util.Run
 import XMonad.Hooks.ManageDocks
 import XMonad.Actions.CycleWS
+import XMonad.Hooks.DynamicLog
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -65,6 +66,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch qute
     , ((modm,               xK_b     ), spawn "qutebrowser")
+
+    -- launch thunar
+    , ((modm,               xK_f     ), spawn "thunar")
 
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
@@ -238,7 +242,11 @@ myEventHook = mempty
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
-myLogHook = return ()
+-- myLogHook = return ()
+-- myLogHook = dynamicLogWithPP xmobarPP
+--                    { ppOutput = hPutStrLn xmproc
+--                    , ppTitle = xmobarColor "green" "" . shorten 50
+--                    }
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -251,6 +259,9 @@ myLogHook = return ()
 myStartupHook = do
 	spawnOnce "nitrogen --restore &"
 	spawnOnce "compton &"
+	-- spawnOnce "nm-applet &"
+	-- spawnOnce "volumeicon &"
+	-- spawnOnce "trayer --edge top --align right --width 5 --padding 5 --margin 5 --SetDockType true --SetPertialStrut true --expand true --monitor 1 --transparent true --alpha 0 --height 18 --tint 0x292d3e &"
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
@@ -258,17 +269,9 @@ myStartupHook = do
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main = do
-	xmproc <- spawnPipe "xmobar -x 0 /home/jwood/.config/xmobar/xmobar.config"
-	xmproc <- spawnPipe "xmobar -x 1 /home/jwood/.config/xmobar/xmobar.config"
-	xmonad $ docks defaults
-
--- A structure containing your configuration settings, overriding
--- fields in the default config. Any you don't override, will
--- use the defaults defined in xmonad/XMonad/Config.hs
---
--- No need to modify this.
---
-defaults = def {
+	h <- spawnPipe "xmobar -x 0 /home/jwood/.config/xmobar/xmobar.config.1"
+	l <- spawnPipe "xmobar -x 1 /home/jwood/.config/xmobar/xmobar.config.2"
+	xmonad $ docks def {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
@@ -287,7 +290,10 @@ defaults = def {
         layoutHook         = myLayout,
         manageHook         = myManageHook,
         handleEventHook    = myEventHook,
-        logHook            = myLogHook,
+        logHook            = dynamicLogWithPP $
+                             xmobarPP {
+                               ppOutput = hPutStrLn h
+                             },
         startupHook        = myStartupHook
     }
 
