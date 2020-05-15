@@ -4,6 +4,7 @@ import System.Exit
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Run
 import XMonad.Hooks.ManageDocks
+import XMonad.Actions.CycleWS
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -54,13 +55,22 @@ myFocusedBorderColor = "#403C9C"
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
-    [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+    [ ((modm .|. shiftMask, xK_Return), spawn "dmenu_run")
+
+    -- launch alacritty
+    , ((modm,               xK_Return), spawn "alacritty")
 
     -- launch dmenu
     , ((modm,               xK_p     ), spawn "dmenu_run")
 
+    -- launch qute
+    , ((modm,               xK_b     ), spawn "qutebrowser")
+
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+
+    -- lock computer
+    , ((modm .|. shiftMask, xK_z     ), spawn "slock")
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
@@ -87,7 +97,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_m     ), windows W.focusMaster  )
 
     -- Swap the focused window and the master window
-    , ((modm,               xK_Return), windows W.swapMaster)
+    -- , ((modm,               xK_Return), windows W.swapMaster)
+    , ((modm .|. shiftMask, xK_m     ), windows W.swapMaster)
 
     -- Swap the focused window with the next window
     , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
@@ -105,10 +116,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_t     ), withFocused $ windows . W.sink)
 
     -- Increment the number of windows in the master area
-    , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
+    , ((modm              , xK_comma ), prevScreen)
 
     -- Deincrement the number of windows in the master area
-    , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
+    , ((modm              , xK_period), nextScreen)
 
     -- Toggle the status bar gap
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
