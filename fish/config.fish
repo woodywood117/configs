@@ -7,6 +7,8 @@ function vim
 end
 funcsave vim
 
+alias tssh='TERM=xterm-color ssh'
+
 function ide
 	tmux split-window -v -p 20
 	tmux split-window -h -p 50
