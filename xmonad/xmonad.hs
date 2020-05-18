@@ -70,6 +70,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch thunar
     , ((modm,               xK_f     ), spawn "thunar")
 
+    -- launch scrot
+    , ((modm,               xK_s     ), spawn "sleep 0.3; scrot -s '/home/jwood/Pictures/%Y-%m-%d_$wx$h_scrot.png'")
+
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
 
