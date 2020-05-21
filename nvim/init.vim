@@ -194,6 +194,7 @@ set foldmethod=syntax
 set foldlevel=99
 set foldnestmax=1
 set wildmode=longest,list,full
+set viminfo='20,<1000,s1000 " prevents truncated yanks, deletes, etc.
 " Trigger a highlight in the appropriate direction when pressing these keys:
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
