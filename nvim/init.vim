@@ -3,7 +3,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-highlight coc-explorer coc-yaml coc-vetur coc-tsserver coc-rls coc-json coc-html coc-go coc-css cpc-angular'}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-highlight coc-explorer coc-yaml coc-vetur coc-tsserver coc-rls coc-json coc-html coc-go coc-css cpc-angular coc-snippets'}
+Plug 'honza/vim-snippets'
 Plug 'vimwiki/vimwiki'
 " Plug 'vifm/vifm'
 " Plug 'jremmen/vim-ripgrep'
