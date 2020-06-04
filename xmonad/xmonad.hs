@@ -71,7 +71,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_f     ), spawn "thunar")
 
     -- launch scrot
-    , ((modm,               xK_s     ), spawn "sleep 0.3; scrot -s '/home/jwood/Pictures/%Y-%m-%d_$wx$h_scrot.png'")
+    , ((modm,               xK_s     ), spawn "sleep 0.3; maim -s /home/jwood/Pictures/$(date +%s).png")
+    -- , ((modm,               xK_s     ), spawn "sleep 0.3; scrot '/home/jwood/Pictures/%Y-%m-%d_$wx$h_scrot.png'")
 
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
