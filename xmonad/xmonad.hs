@@ -263,8 +263,9 @@ myEventHook = mempty
 myStartupHook = do
 	spawnOnce "nitrogen --restore &"
 	spawnOnce "compton &"
-	-- spawnOnce "nm-applet &"
-	-- spawnOnce "volumeicon &"
+	spawnOnce "trayer --widthtype pixel --width 100 --heighttype pixel --height 18 --transparent true --alpha 255 --distancefrom left --distance 700 &"
+	spawnOnce "nm-applet &"
+	spawnOnce "volumeicon &"
 	-- spawnOnce "trayer --edge top --align right --width 5 --padding 5 --margin 5 --SetDockType true --SetPertialStrut true --expand true --monitor 1 --transparent true --alpha 0 --height 18 --tint 0x292d3e &"
 
 ------------------------------------------------------------------------
